@@ -1,8 +1,7 @@
-import React from 'react'
 import styled from "styled-components"
-import MemoList from "../components/List"
-import MemoToolBar from "../components/Toolbar"
-import MemoEditor from "../components/Editor"
+import MemoList from "../components/Memo/List"
+import MemoToolBar from "../components/Memo/Toolbar"
+import MemoEditor from "../components/Memo/Editor"
 
 const FlexRow = styled.div`
   display: flex;
