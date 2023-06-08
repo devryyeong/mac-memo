@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import SmallButton from "../../Button/SmallButton";
 import { TitleText } from "../../Text";
 import Block from "../../Block";
+import SearchInput from "../../Input/SearchInput";
 import { ReactComponent as PostDeleteIcon } from "./assets/delete_outline_black.svg";
 import { ReactComponent as MakeTodoIcon } from "./assets/check_circle_outline_black.svg";
 import { ReactComponent as MakeImageIcon } from "./assets/collections_black.svg";
 import { ReactComponent as MakeBoldIcon } from "./assets/format_bold_black.svg";
 import { ReactComponent as PostAddIcon } from "./assets/post_add_black.svg";
 import { ReactComponent as MakeSizeIcon } from "./assets/text_fields_black.svg";
-import SearchInput from "../../Input/SearchInput";
 
 const Box = styled.div`
   width: 100%;
