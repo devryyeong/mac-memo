@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "styled-components";
 
 const Box = styled.div<{ selected?: boolean }>`
-  // width: 100%;
+  width: 100%;
   height: fit-content;
   padding: 8px 15px 8px 15px;
   border-radius: 5px;
