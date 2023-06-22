@@ -1,8 +1,11 @@
-import { useState} from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styled from "styled-components"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css";
 import Block from "../../Block";
+import { SelectedMemoListSelector } from "./../../../store/memo/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { useMemoSlice } from "./../../../store/memo/index";
 
 const Box = styled.div`
   width: 100%;
@@ -28,16 +31,40 @@ const MemoDate = styled.div`
 `;
 
 const MemoEditor = () => {
+  const { MemoActions } = useMemoSlice();
+  const dispatch = useDispatch();
+  const selectedMemo = useSelector(SelectedMemoListSelector)
+
   const [value, setValue] = useState('');
+
+  const EditorRef = useRef<ReactQuill>();
+
+  useEffect(() => {
+    setValue(selectedMemo !== undefined ? selectedMemo.content : '');
+  }, [selectedMemo])
+  
 
   return (
     <Box>
       <Block marginTop="5px" />
-      <MemoDate>{new Date().toLocaleString()}</MemoDate>
+      <MemoDate>{new Date(selectedMemo?.created_at ?? '').toLocaleString()}</MemoDate>
       <ReactQuill
         theme="snow"
         value={value}
-        onChange={setValue}
+        ref={element => {
+          if (element !== null) {
+            EditorRef.current = element;
+          }
+        }}
+        onChange={content => {
+          setValue(content);
+          dispatch(
+            MemoActions.saveMemo({
+              content: content,
+              preview: EditorRef.current?.getEditor().getText(),
+            })
+          );
+        }}
         style={{ border: "none" }}
         modules={{
           toolbar: {

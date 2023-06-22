@@ -10,10 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react-redux": "^7.1.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.12.0",
+    "redux-injectors": "^2.1.0",
+    "redux-saga": "^1.2.3",
     "styled-reset": "^4.4.7",
     "vite-plugin-svgr": "^3.2.0"
   },

@@ -10,6 +10,9 @@ import { ReactComponent as MakeImageIcon } from "./assets/collections_black.svg"
 import { ReactComponent as MakeBoldIcon } from "./assets/format_bold_black.svg";
 import { ReactComponent as PostAddIcon } from "./assets/post_add_black.svg";
 import { ReactComponent as MakeSizeIcon } from "./assets/text_fields_black.svg";
+import { useMemoSlice } from "../../../store/memo";
+import { useDispatch, useSelector } from "react-redux";
+import { SearchMemoSelector } from "../../../store/memo/selectors";
 
 const icons = ReactQuill.Quill.import('ui/icons');
 
@@ -61,43 +64,57 @@ const RightMenu = styled(Menu)`
 `;
 
 const MemoToolBar = () => {
+  const { MemoActions } = useMemoSlice();
+  const dispatch = useDispatch();
+  const search = useSelector(SearchMemoSelector)
+
   return (
     <Box id="toolbar">
       <LeftMenu>
         <TitleText style={{ marginLeft: "5px" }}>MEMO</TitleText>
-        <SmallButton onClick={() => {}} Icon={() => <PostDeleteIcon />} />
+        <SmallButton
+          onClick={() => {
+            dispatch(MemoActions.deleteMemo());
+          }}
+          Icon={() => <PostDeleteIcon />}
+        />
       </LeftMenu>
       <RightMenu>
-        <SmallButton onClick={() => {}} Icon={() => <PostAddIcon />} />
+        <SmallButton
+          onClick={() => {
+            dispatch(
+              MemoActions.addMemo(
+                "내용을 입력해 주세요",
+                "내용을 입력해 주세요"
+              )
+            );
+          }}
+          Icon={() => <PostAddIcon />}
+        />
         <div>
           <SmallButton
             className="ql-header"
-            value='1'
-            onClick={() => {}}
+            value="1"
             Icon={() => <MakeSizeIcon />}
           />
           <Block marginRight="5px" />
-          <SmallButton
-            className="ql-bold"
-            onClick={() => {}}
-            Icon={() => <MakeBoldIcon />}
-          />
+          <SmallButton className="ql-bold" Icon={() => <MakeBoldIcon />} />
           <Block marginRight="5px" />
           <SmallButton
             className="ql-list"
             value="check"
-            onClick={() => {}}
             Icon={() => <MakeTodoIcon />}
           />
         </div>
         <div>
-          <SmallButton
-            className="ql-image"
-            onClick={() => {}}
-            Icon={() => <MakeImageIcon />}
-          />
+          <SmallButton className="ql-image" Icon={() => <MakeImageIcon />} />
           <Block marginRight="5px" />
-          <SearchInput />
+          <SearchInput
+            search={search}
+            onChange={(value) =>
+              dispatch(MemoActions.searchMemo({ search: value }))
+            }
+          />
         </div>
       </RightMenu>
     </Box>
